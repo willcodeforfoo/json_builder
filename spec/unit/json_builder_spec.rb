@@ -74,4 +74,16 @@ describe "JSONBuilder" do
       hash_test :garrett => true, :london => "Test"
     end.should == '{"hash_test": {"garrett":true,"london":"Test"}}'
   end
+  
+  it "should support enumerating with each_with_index" do
+    json_builder do
+      people do
+        [{:name => "Kevin"}, {:name => "Sam"}, {:name => "Keri"}].each_with_index do |person, i|
+          key "person-#{i}" do
+            first_name person[:name]
+          end
+        end
+      end
+    end.should == '{"people": {"person-0": {"first_name": "Kevin"}}, {"person-1": {"first_name": "Sam"}}, {"person-2": {"first_name": "Keri"}}}'
+  end
 end
