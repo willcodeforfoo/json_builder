@@ -21,7 +21,7 @@ module JSONBuilder
       case @value
       when String, TrueClass, FalseClass then @value.inspect
       when Hash then @value.to_json
-      when BSON::ObjectId then @value.to_s.inspect
+      when defined?(BSON) && BSON::ObjectId then @value.to_s.inspect
       when NilClass then 'null'
       when Time, Date, DateTime then @value.iso8601.inspect
       else @value.to_s
